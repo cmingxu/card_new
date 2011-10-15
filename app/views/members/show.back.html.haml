@@ -1,0 +1,118 @@
+- if @p !='mc'
+  %label{:align => "right"}
+    = link_to '创建新会员', new_member_path
+    %br/
+%br/
+%h1.title 会员详细资料
+- if notice
+  %p.notice= notice
+.listcontent_w.clearfix.cleft
+  %ul.clearfix
+  %fieldset.hidden
+    %legend 属性信息
+    %li.cleft
+      .w1 会员名称：
+      .w2
+        = @member.name
+        - if @member.name.blank?
+          %a.blank_element
+      .w1 注册日期：
+      .w2
+        = DateUtil::timeshort(@member.created_at)
+    %li.cleft
+      .w1 会员昵称：
+      .w2
+        = @member.nickname
+        - if @member.nickname.blank?
+          %a.blank_element
+      .w1 会员性别：
+      .w2
+        = gender_desc(@member.gender)
+    %li.cleft
+      .w1 移动电话：
+      .w2
+        = @member.mobile
+        - if @member.mobile.blank?
+          %a.blank_element
+      .w1 固定电话：
+      .w2
+        = @member.telephone
+    %li.cleft
+      .w1 工作：
+      .w2
+        = @member.job
+        - if @member.job.blank?
+          %a.blank_element
+      .w1 邮箱：
+      .w2
+        = @member.email
+    %li.cleft
+      .w1 证件类型：
+      .w2
+        = generate_cert_type_str(@member.cert_type)
+        - if generate_cert_type_str(@member.cert_type).blank?
+          %a.blank_element
+      .w1 证件号码：
+      .w2
+        - if !generate_cert_type_str(@member.cert_type).blank?
+          = @member.cert_num
+    %li.cleft
+      .w1 联系地址：
+      .w2
+        = @member.address
+        - if @member.address.blank?
+          %a.blank_element
+      .w1 介绍人：
+      .w2
+        = @member.mentor
+    %li.cleft
+      .w1 备注：
+      .w2
+        = @member.memo
+.listcontent_w.clearfix.cleft
+  %ul.clearfix
+  %fieldset.hidden
+    %legend 其他信息
+    %li.cleft
+      .w1 刷卡次数：
+      .w2
+        %a.blank_element
+      .w1 最近来店日期：
+      .w2
+        = @member.latest_comer_date
+    %li.cleft
+      .w1 消费总金额：
+      .w2
+        = @member.member_consume_amounts
+        - if @member.member_consume_amounts.blank?
+          %a.blank_element
+      .w1 卡内余额：
+      .w2
+        = @member.member_card_left_fees
+    %li.cleft
+      .w1 卡付金额：
+      .w2
+        %a.blank_element
+      .w1 现金支付：
+      .w2
+    %li.cleft
+      .w1 总充值金额：
+      .w2
+        = @member.recharge_fees
+      .w1 卡内次数：
+      .w2
+        = @member.member_card_left_times
+    %li.cleft
+      .w1 卡付次数：
+      .w2
+        %a.blank_element
+      .w1 总充值次数（次）：
+      .w2
+        = @member.recharge_times
+= render :partial => "member_card_list"
+= render :partial => "recharge_list"
+= render :partial => "consume_list"
+.btn.t_center
+  %a{:href => "/members/#{@member.id}/edit"} 修改
+  |
+  %a{:href => "/members"} 返回

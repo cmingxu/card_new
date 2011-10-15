@@ -1,0 +1,47 @@
+.setlist.clearfix
+  .color.clearfix
+    %span.color01 红色-已预定
+    %span.color02 浅灰色-已过期
+    %span.color03 紫色-开打中
+    %span.color04 绿色-已结算
+    %span.color05 褐色-代卖中
+  %h1.pagemenu
+    %input{:onclick => "location.href="/book_records?date=#{@predate}"", :type => "button", :value => "<<\345\211\215\344\270\200\345\244\251"}/
+    %input{:onclick => "location.href='/book_records'", :type => "button", :value => "\344\273\212\345\244\251"}/
+    %input{:onclick => "location.href="/book_records?date=#{@nextdate}"", :type => "button", :value => "\345\220\216\344\270\200\345\244\251>>"}/
+    %input{:type => "button", :value => "\345\210\267\346\226\260"}/
+    %input{:type => "button", :value => "\346\211\223\345\215\260"}/
+  - (0...([(@courts.length%6 == 0 ? @courts.length/6  : @courts.length/6+1),1].max )).each do |row|  tcs = @courts[6*row,6]
+    %ul#time
+      %li.tit 时段/场地
+      - for period in @daily_periods
+        - period.start_time.upto(period.end_time - 1) do |i|
+          %li
+            = i
+            \:00-#{i+1}:00
+    - for court in tcs
+      %ul#date
+        %li.tit= court.name
+        = display_period_per_hour(@daily_periods,court,@date)
+%script{:charset => "utf-8", :type => "text/javascript"}
+  $(function() {
+  $(".book-reocrd-draggable").draggable();
+  $(".book-reocrd-droppable").droppable({
+  drop: function( event, ui ){
+  alert($(this).attr('class'))
+  alert(ui.draggable.attr('class'))
+  }
+  });
+  $(".book-reocrd-draggablesss").mouseover(function(){
+  var li = $(this);
+  li.css('z-index',1000);
+  li.unbind('mouseover');
+  li.animate({
+  width: li.width()*2,
+  height: li.height()*2,
+  opacity: 0.4,
+  borderWidth: "5px"
+  }, 1500 );
+  });
+  
+  })
