@@ -1,7 +1,5 @@
 class Coach < ActiveRecord::Base
   
-  include CoacheOrder
-
   validates :name, :presence => {:message => "名称不能为空！"}
   validates :cert_num, :uniqueness => {:on => :create, :message => '证件号已经存在！', :if => Proc.new { |coach|  !coach.cert_num.blank? }}#证件号唯一
   validates :telephone, :presence => {:message => "联系电话不能为空！"}#, :uniqueness => {:if => Proc.new { |coach|  !coach.telephone.blank? }, :message => "联系电话已经被使用了！"}
@@ -14,10 +12,6 @@ class Coach < ActiveRecord::Base
   after_create :set_default_status
   def set_default_status
     self.update_attribute(:status, 1)
-  end
-
-  def set_catena_id
-    self.catena_id = current_catena.id
   end
 
   def coach_status_str

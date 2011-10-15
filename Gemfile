@@ -7,6 +7,8 @@ gem 'rails', '3.1.1'
 
 gem 'mysql2'
 
+gem 'awesome_print'
+
 gem 'json'
 gem 'haml'
 gem "haml-rails"
@@ -27,8 +29,14 @@ gem 'highline'
 
 group :development do 
   gem "erb2haml"
+  gem 'rspec'
+  gem 'rspec-rails'
 end
 
+
+group :test do
+
+end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

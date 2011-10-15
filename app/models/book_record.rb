@@ -1,7 +1,5 @@
 class BookRecord < ActiveRecord::Base
 
-  include BookRecordOrder
-
   Status_Default     = 0  #等待与等
   Status_Prearranged = 1  #已预定
   Status_Settling    = 2  #已结算

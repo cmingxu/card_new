@@ -1,6 +1,5 @@
 class MemberCard < ActiveRecord::Base
 
-  include MemberCardOrder
   
   belongs_to  :card
   belongs_to  :member

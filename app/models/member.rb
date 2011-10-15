@@ -8,7 +8,6 @@ class Member < ActiveRecord::Base
     false
   end
 
-  include MemberOrder
 
   default_scope :order =>  'id desc'
 

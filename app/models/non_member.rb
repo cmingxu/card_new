@@ -1,7 +1,6 @@
 require 'pinyin/pinyin'
 class NonMember < ActiveRecord::Base
 
-  include NonMemberOrder
 
   has_one :order,:foreign_key => 'member_id',:conditions => "member_type=#{Const::NO}"
   
