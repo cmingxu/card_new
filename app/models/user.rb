@@ -1,25 +1,12 @@
 require 'pinyin/pinyin'
 class User < ActiveRecord::Base
 
+  acts_as_authentic
   has_many :department_users
   has_many :departments,:through => :department_users
-  acts_as_authentic do |c|
-    c.validates_length_of_password_confirmation_field_options = {:minimum => 1 }# if c.password.present?
-    c.validates_length_of_password_field_options = { :minimum => 1 }# if c.password_confirmation.present?
-    c.merge_validates_length_of_password_field_options :message => "密码过短"
-    c.merge_validates_length_of_password_confirmation_field_options :message => "密码过短"
-    c.validates_length_of_login_field_options = {:within => 0..100}
-    c.merge_validates_length_of_login_field_options :message => '登录名长度过短'
-  end
-
   has_many   :user_powers
   has_many :powers,:through => :user_powers,:conditions => "will_show = 1"
   has_and_belongs_to_many :catenas
-
-  #  validates :login, :presence => {:message => "用户名不能为空！"},
-  # :uniqueness => {:on => :create, :message => '用户名已经存在！', :if => Proc.new { |user| !user.login.nil? && !user.login.blank? }}
-  #  validates :password, :presence => {:message => "密码不能为空！"}
-  #  validates :user_name, :presence => {:message => "昵称不能为空！"}
 
   belongs_to :catena
   before_save :geneate_name_pinyin
@@ -28,16 +15,6 @@ class User < ActiveRecord::Base
     pinyin = PinYin.new
     self.user_name_pinyin = pinyin.to_pinyin(self.user_name) if self.user_name
   end
-
-
-  def should_catena?
-    false
-  end
-
-  def can_catena?
-    false
-  end
-
 
   after_create :set_powers
 

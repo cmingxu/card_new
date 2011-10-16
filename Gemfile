@@ -12,7 +12,7 @@ gem 'awesome_print'
 gem 'json'
 gem 'haml'
 gem "haml-rails"
-
+gem 'authlogic', '3.0.3'
 gem 'paperclip'
 
 # Gems used only for assets and not required

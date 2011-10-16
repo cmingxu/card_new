@@ -25,19 +25,6 @@ class ApplicationController < ActionController::Base
   before_filter :require_user#,:require_very_user #应该过滤掉登陆用户
 
   helper_method :current_user_session, :current_user
-  before_filter :set_catena
-
-  def set_catena
-    Catena.current=(Catena.find_by_id(session[:catena_id]) || current_user.catena || Catena.default_catena) if current_user
-  end
-
-  def current_catena
-    Thread.current[:catena]
-  end
-
-  def current_catena_id
-    Thread.current[:catena_id]
-  end
 
   self.allow_forgery_protection = false
 

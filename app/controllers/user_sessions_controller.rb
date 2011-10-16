@@ -12,7 +12,6 @@ class UserSessionsController < ApplicationController
   def create
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
-      @catena = Catena.find(params[:catena_id]) rescue Catena.first
       unless @user_session.user.catenas.include? @catena
         @user_session.destroy
         render :action => "new" and return
